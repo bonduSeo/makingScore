@@ -1,0 +1,6 @@
+body { font-family: Arial, sans-serif; background: #f5f7fb; margin: 0; }
+main { max-width: 880px; margin: 2rem auto; background: #fff; padding: 1.5rem; border-radius: 12px; }
+section { border: 1px solid #ddd; border-radius: 8px; margin: 1rem 0; padding: 1rem; }
+label, textarea, select, input, button { display: block; width: 100%; margin-top: 0.5rem; }
+button { width: auto; padding: 0.5rem 1rem; }
+pre { background: #111; color: #d7f9d2; padding: 0.75rem; border-radius: 6px; overflow: auto; }

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>MakingScore Wrapper</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <main>
+    <h1>MP3 → MIDI/악보 Wrapper 초안</h1>
+
+    <section>
+      <h2>1) 전사 실행</h2>
+      <form method="post" action="/transcribe" enctype="multipart/form-data">
+        <label>오디오 파일(mp3/wav)
+          <input type="file" name="audio_file" accept=".mp3,.wav" required>
+        </label>
+        <label>파이프라인
+          <select name="approach">
+            <option value="A">접근 A (엔드-투-엔드)</option>
+            <option value="B" selected>접근 B (분리 후 스템별 전사)</option>
+          </select>
+        </label>
+        <label>
+          <input type="checkbox" name="include_score" value="true"> MusicXML도 생성
+        </label>
+        <button type="submit">실행</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>2) GPT 추천(옵션)</h2>
+      <form method="post" action="/advice">
+        <textarea name="question" rows="4" placeholder="예: 락 발라드에서 드럼 정확도 우선 조합 추천"></textarea>
+        <button type="submit">추천 받기</button>
+      </form>
+      {% if advice %}
+      <pre>{{ advice }}</pre>
+      {% endif %}
+    </section>
+
+    <section>
+      <h2>3) OAuth(옵션)</h2>
+      <a href="/auth/login">OpenAI OAuth 로그인 시도</a>
+    </section>
+
+    {% if result %}
+    <section>
+      <h2>결과</h2>
+      <p>출력 폴더: {{ result.output_dir }}</p>
+      <ul>
+        {% for artifact in result.artifacts %}
+          <li>{{ artifact }}</li>
+        {% endfor %}
+      </ul>
+      <h3>로그</h3>
+      <pre>{% for log in result.logs %}{{ log }}
+{% endfor %}</pre>
+    </section>
+    {% endif %}
+  </main>
+</body>
+</html>
